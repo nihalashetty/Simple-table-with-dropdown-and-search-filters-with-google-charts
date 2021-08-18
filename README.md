@@ -7,6 +7,8 @@ This is a simple table with and without using datatable having dropdown and sear
 *Filtering based on columns.
 *Dropdown filters.
 *Filtered data is also displayed in google chart.
+![Screenshot](https://github.com/nihalashetty/Simple-table-with-dropdown-and-search-filters-with-google-charts/blob/main/normal%20table.JPG)
+
 
 # DataTable: 
 *Datatable is a free opensource plugin for handling tables. It has lots of features.
@@ -15,6 +17,4 @@ This is a simple table with and without using datatable having dropdown and sear
 *Filtering based on columns and search.
 *Dropdown filters.
 *Filtered data is also displayed in google chart
-
-![Screenshot](https://github.com/nihalashetty/Simple-table-with-dropdown-and-search-filters-with-google-charts/blob/main/normal%20table.JPG)
 ![Screenshot](https://github.com/nihalashetty/Simple-table-with-dropdown-and-search-filters-with-google-charts/blob/main/datatables.JPG)
