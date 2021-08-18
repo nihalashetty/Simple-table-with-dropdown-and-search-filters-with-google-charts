@@ -17,4 +17,4 @@ This is a simple table with and without using datatable having dropdown and sear
 *Filtered data is also displayed in google chart
 
 ![Screenshot](https://github.com/nihalashetty/Simple-table-with-dropdown-and-search-filters-with-google-charts/blob/main/normal%20table.JPG)
-![Screenshot](https://github.com/nihalashetty/Simple-table-with-dropdown-and-search-filters-with-google-charts/blob/main/simple%20table.html)
+![Screenshot](https://github.com/nihalashetty/Simple-table-with-dropdown-and-search-filters-with-google-charts/blob/main/datatables.JPG)
