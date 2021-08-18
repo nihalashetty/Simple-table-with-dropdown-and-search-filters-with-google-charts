@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/scroller/2.0.4/css/scroller.dataTables.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/scroller/2.0.4/js/dataTables.scroller.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <title>Document</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        select {
+            width: 200px;
+            height: 50px;
+        }
+
+        #example {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #ddd;
+            font-size: 18px;
+        }
+
+        #example th, #example td {
+            text-align: left;
+            padding: 12px;
+        }
+
+        #example tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        #example tr.header, #example tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+        }
+
+        .chart {
+            width: 40%;
+        }
+        .filter {
+            float: right;
+            width: 60%;
+            margin: 30px;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 80px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chart">
+            <div id="piechart"></div>
+        </div>
+        <div class="filter">
+            <select id="name" data-col="1"><option value="">Name</option><option>ABC1</option><option>ABC2</option><option>ABC3</option><option>ABC4</option><option>ABC5</option><option>ABC6</option><option>ABC7</option><option>ABC8</option><option>ABC9</option><option>ABC10</option></select>
+            <select id="price" data-col="2"><option value="">Price</option><option>10</option><option>20</option><option>30</option><option>40</option><option>50</option><option>60</option><option>70</option><option>80</option><option>90</option><option>100</option></select>
+            <select id="category" data-col="3"><option value="">Category</option><option>A1</option><option>A2</option><option>A3</option><option>A4</option><option>A5</option><option>A6</option><option>A7</option><option>A8</option><option>A9</option><option>A10</option></select>
+            <select id="country" data-col="4"><option value="">Country</option><option>1XYZ</option><option>2XYZ</option><option>3XYZ</option><option>4XYZ</option><option>5XYZ</option><option>6XYZ</option><option>7XYZ</option><option>8XYZ</option><option>9XYZ</option><option>10XYZ</option></select>
+            <button id="clear">clear all</button>
+        </div>
+    </div>
+    <table id="example" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+    </table>
+
+    <script>
+        var data = [];
+        var index = 0;
+
+        for (var l=1; l<=10; l++) {
+            for (var k=1; k<=10; k++) {
+                for (var j=1; j<=10; j++) {
+                    for (var i=1; i<=10; i++) {
+                        index++;
+                        data.push( [ `${index}`, `ABC${l}`, k * 10, `A${j}`, `${i}XYZ` ] );
+                    }
+                }
+            }
+        }
+
+        var table = $('#example').DataTable( {
+            orderCellsTop: true,
+            fixedHeader: true,
+            data: data,
+        });
+
+        function filter(e) {
+            var arrData = {
+                A1:0,
+                A2:0,
+                A3:0,
+                A4:0,
+                A5:0,
+                A6:0,
+                A7:0,
+                A8:0,
+                A9:0,
+                A10:0
+            };
+            var arrayData = [];
+            if (e && table.column($(e.target).data('col')).search() !== $(e.target).val()) {
+                table
+                    .column($(e.target).data('col'))
+                    .search($(e.target).val())
+                    .draw();
+            }
+
+            table.columns(3, { filter : 'applied'}).data()[0].forEach(element => {
+                arrData[element]++;
+            });
+
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Data table'],
+                ['A1', arrData.A1],
+                ['A2', arrData.A2],
+                ['A3', arrData.A3],
+                ['A4', arrData.A4],
+                ['A5', arrData.A5],
+                ['A6', arrData.A6],
+                ['A7', arrData.A7],
+                ['A8', arrData.A8],
+                ['A9', arrData.A9],
+                ['A10', arrData.A10]
+            ]);
+
+            drawChart(data);
+        }
+
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(filter);
+        function drawChart(data) {
+            var options = {
+                title: 'DATA TABLE DEMO CHART'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+
+        $('#name, #price, #category, #country').on('change', function(e) {
+            filter(e);
+        });
+        $('#clear').on('click', function () {
+            $('#name, #price, #category, #country').val('').change();
+        });
+    </script>
+</body>
+</html>
